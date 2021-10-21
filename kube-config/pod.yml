@@ -1,0 +1,37 @@
+#Pod definition caontaining both redis and aspnet core cotnainers 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "mvc-redis"
+  namespace: default
+  labels:
+    app: "mvc-and-redis"
+spec:
+  containers:
+  - name: mvc
+    image: "loquey/loq-pub:1.0"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    ports:
+    - containerPort:  7081
+      name : https
+    - containerPort: 5018
+      name:  http
+  - name: redis
+    image: "redis"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    ports:
+    - containerPort:  6379
+      name : redis-port
+  restartPolicy: Always
